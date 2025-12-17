@@ -237,8 +237,7 @@ FROM @tasty_bytes_dbt_db.public.s3load/raw_pos/order_detail/;
 -- setup completion note
 SELECT 'tasty_bytes_dbt_db setup is now complete' AS note;
 
--- task creation
-create or replace task tasty_bytes_dbt_db.dev.test_dbt_task
-    warehouse = tasty_bytes_dbt_wh
-    schedule = 'USING CRON 1 1 * * * America/New_York'
-    as EXECUTE dbt project TASTY_BYTES_DBT_PROJECT args = 'run --target dev'
+create or replace git repository dbt_production_repo
+    origin = 'https://github.com/rawitner/getting-started-with-dbt-on-snowflake.git'
+    api_integration = tb_dbt_git_api_integration
+    ;
